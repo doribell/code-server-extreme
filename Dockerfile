@@ -88,5 +88,4 @@ WORKDIR /config/workspace
 
 ENTRYPOINT ["code-server", "--bind-addr", "0.0.0.0:8080"]
 
-EXPOSE 5000
-EXPOSE 8080
+EXPOSE 8080 5000 5001
