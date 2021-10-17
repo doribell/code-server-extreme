@@ -55,6 +55,7 @@ RUN python3.9 -m pip install flake8
 
 # Setup golang development
 RUN apt-get install golang -y
+ENV GO111MODULE=off
 
 # Setup php development
 RUN apt-get install -y php php-common php-cli php-curl php-gd php-intl \
