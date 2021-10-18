@@ -55,8 +55,7 @@ RUN python3.9 -m pip install flake8
 
 # Setup golang development
 RUN apt-get install golang -y
-ENV GO111MODULE=off \
-    GOPATH=$HOME/go \
+ENV GOPATH=$HOME/go \
     GOBIN=$HOME/go/bin
 
 # Setup php development
