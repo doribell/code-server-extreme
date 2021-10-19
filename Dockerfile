@@ -9,7 +9,8 @@ ENV TZ=Europe/Berlin
 RUN apt-get update && apt-get upgrade -y
 
 # Install dependencies
-RUN apt-get install -y apt-utils wget bash curl git gnupg nodejs openssh-client
+RUN apt-get install -y apt-utils wget bash curl git gnupg nodejs openssh-client locales
+RUN locale-gen en_US.UTF-8
 
 # Install tools
 RUN apt-get install -y nano net-tools iputils-ping sudo mc htop vim zsh zsh-autosuggestions zsh-syntax-highlighting ansible
