@@ -57,7 +57,8 @@ RUN python3.9 -m pip install flake8
 # Setup golang development
 RUN apt-get install golang -y
 ENV GOPATH=$HOME/go \
-    GOBIN=$HOME/go/bin
+    GOBIN=$HOME/go/bin \
+    PATH=$PATH:/config/go/bin
 
 # Setup php development
 RUN apt-get install -y php php-common php-cli php-curl php-gd php-intl \
