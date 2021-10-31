@@ -49,10 +49,12 @@ RUN wget https://github.com/Samsung/netcoredbg/releases/download/$NETCOREDBG_VER
     && rm netcoredbg-linux-amd64_fixed.tar.gz
 
 # Setup python development
-RUN apt-get install -y python3.9 python3-pip inetutils-ping python3-venv
+RUN apt-get install -y python3.9 python3-pip inetutils-ping python3-venv virtualenv
 RUN python3.9 -m pip install pip
 RUN python3.9 -m pip install wheel
 RUN python3.9 -m pip install flake8
+RUN python3.9 -m pip install Flask
+RUN python3.9 -m pip install Django
 
 # Setup golang development
 RUN apt-get install golang -y
