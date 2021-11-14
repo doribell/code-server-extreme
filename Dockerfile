@@ -23,7 +23,7 @@ RUN wget https://github.com/cdr/code-server/releases/download/v$VERSION/code-ser
     dpkg -i code-server_${VERSION}_amd64.deb && \
     rm code-server_${VERSION}_amd64.deb
 
-ARG INSTALL_VERSION="dotnet-sdk-3.1 dotnet-sdk-5.0"
+ARG INSTALL_VERSION="dotnet-sdk-3.1 dotnet-sdk-5.0 dotnet-sdk-6.0"
 
 RUN apt-get install -y wget apt-transport-https software-properties-common \
     # Register the Microsoft repository
@@ -38,23 +38,23 @@ RUN apt-get install -y wget apt-transport-https software-properties-common \
     # https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
     && apt-get install -y ${INSTALL_VERSION}
 
-# https://github.com/Samsung/netcoredbg/releases/download/1.2.0-825/netcoredbg-linux-amd64_fixed.tar.gz
-ENV NETCOREDBG_VERSION=1.2.0-825
+# https://github.com/Samsung/netcoredbg/releases/download/2.0.0-859/netcoredbg-linux-amd64.tar.gz
+ENV NETCOREDBG_VERSION=2.0.0-859
 
 # Download and install Samsung Debugger for .NET Core runtime
-RUN wget https://github.com/Samsung/netcoredbg/releases/download/$NETCOREDBG_VERSION/netcoredbg-linux-amd64_fixed.tar.gz \
+RUN wget https://github.com/Samsung/netcoredbg/releases/download/$NETCOREDBG_VERSION/netcoredbg-linux-amd64.tar.gz \
     && mkdir -p /usr/share/netcoredbg \
-    && tar -oxzf netcoredbg-linux-amd64_fixed.tar.gz -C /usr/share \
+    && tar -oxzf netcoredbg-linux-amd64.tar.gz -C /usr/share \
     && ln -s /usr/share/netcoredbg/netcoredbg /usr/bin/netcoredbg \
-    && rm netcoredbg-linux-amd64_fixed.tar.gz
+    && rm netcoredbg-linux-amd64.tar.gz
 
 # Setup python development
-RUN apt-get install -y python3.9 python3-pip inetutils-ping python3-venv virtualenv
-RUN python3.9 -m pip install pip
-RUN python3.9 -m pip install wheel
-RUN python3.9 -m pip install flake8
-RUN python3.9 -m pip install Flask
-RUN python3.9 -m pip install Django
+RUN apt-get install -y python3.10 python3-pip inetutils-ping python3-venv virtualenv
+RUN python3.10 -m pip install pip
+RUN python3.10 -m pip install wheel
+RUN python3.10 -m pip install flake8
+RUN python3.10 -m pip install Flask
+RUN python3.10 -m pip install Django
 
 # Setup golang development
 RUN apt-get install golang -y
