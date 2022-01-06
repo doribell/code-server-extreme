@@ -15,7 +15,7 @@ RUN locale-gen en_US.UTF-8
 # Install tools
 RUN apt-get install -y nano net-tools iputils-ping sudo mc htop vim zsh zsh-autosuggestions zsh-syntax-highlighting ansible
 
-ENV VERSION=3.11.1 \
+ENV VERSION=4.0.1 \
     HOME="/config"
 
 # Download and install code-server
@@ -38,8 +38,8 @@ RUN apt-get install -y wget apt-transport-https software-properties-common \
     # https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
     && apt-get install -y ${INSTALL_VERSION}
 
-# https://github.com/Samsung/netcoredbg/releases/download/2.0.0-859/netcoredbg-linux-amd64.tar.gz
-ENV NETCOREDBG_VERSION=2.0.0-859
+# https://github.com/Samsung/netcoredbg/releases/download/2.0.0-880/netcoredbg-linux-amd64.tar.gz
+ENV NETCOREDBG_VERSION=2.0.0-880
 
 # Download and install Samsung Debugger for .NET Core runtime
 RUN wget https://github.com/Samsung/netcoredbg/releases/download/$NETCOREDBG_VERSION/netcoredbg-linux-amd64.tar.gz \
