@@ -16,14 +16,6 @@ RUN apt-get install -y nano net-tools iputils-ping sudo mc htop vim zsh zsh-auto
 
 RUN locale-gen en_US.UTF-8
 
-ENV CODE_SERVER_VERSION=4.5.1 \
-    HOME="/config"
-
-# Download and install code-server
-RUN wget https://github.com/cdr/code-server/releases/download/v$CODE_SERVER_VERSION/code-server_${CODE_SERVER_VERSION}_amd64.deb && \
-    dpkg -i code-server_${CODE_SERVER_VERSION}_amd64.deb && \
-    rm code-server_${CODE_SERVER_VERSION}_amd64.deb
-
 RUN apt-get install -y wget apt-transport-https software-properties-common \
     # Register the Microsoft repository
     && wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -sr)/packages-microsoft-prod.deb \
@@ -36,16 +28,6 @@ RUN apt-get install -y wget apt-transport-https software-properties-common \
     # Install .NET SDK
     # https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
     && apt-get install -y "dotnet-sdk-6.0"
-
-# https://github.com/Samsung/netcoredbg/releases/download/2.0.0-915/netcoredbg-linux-amd64.tar.gz
-ENV NETCOREDBG_VERSION=2.0.0-915
-
-# Download and install Samsung Debugger for .NET Core runtime
-RUN wget https://github.com/Samsung/netcoredbg/releases/download/$NETCOREDBG_VERSION/netcoredbg-linux-amd64.tar.gz \
-    && mkdir -p /usr/share/netcoredbg \
-    && tar -oxzf netcoredbg-linux-amd64.tar.gz -C /usr/share \
-    && ln -s /usr/share/netcoredbg/netcoredbg /usr/bin/netcoredbg \
-    && rm netcoredbg-linux-amd64.tar.gz
 
 # Setup python development
 RUN apt-get install -y python3.10 python3-pip inetutils-ping python3-venv virtualenv
@@ -83,6 +65,15 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN useradd -s /bin/bash -m coder -d /config \
     && usermod -aG sudo coder \
     && echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+ENV CODE_SERVER_VERSION=4.5.1 \
+    HOME="/config"
+
+# Download and install code-server
+RUN wget https://github.com/cdr/code-server/releases/download/v$CODE_SERVER_VERSION/code-server_${CODE_SERVER_VERSION}_amd64.deb && \
+    dpkg -i code-server_${CODE_SERVER_VERSION}_amd64.deb && \
+    rm code-server_${CODE_SERVER_VERSION}_amd64.deb
+
 USER coder
 
 # Create volumes
