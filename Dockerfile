@@ -1,4 +1,4 @@
-FROM ubuntu:21.04
+FROM ubuntu:22.04
 
 USER root
 
@@ -10,20 +10,19 @@ RUN apt-get update && apt-get upgrade -y
 
 # Install dependencies
 RUN apt-get install -y apt-utils wget bash curl git gnupg nodejs openssh-client locales
-RUN locale-gen en_US.UTF-8
 
 # Install tools
 RUN apt-get install -y nano net-tools iputils-ping sudo mc htop vim zsh zsh-autosuggestions zsh-syntax-highlighting ansible
 
-ENV VERSION=4.0.1 \
+RUN locale-gen en_US.UTF-8
+
+ENV CODE_SERVER_VERSION=4.5.1 \
     HOME="/config"
 
 # Download and install code-server
-RUN wget https://github.com/cdr/code-server/releases/download/v$VERSION/code-server_${VERSION}_amd64.deb && \
-    dpkg -i code-server_${VERSION}_amd64.deb && \
-    rm code-server_${VERSION}_amd64.deb
-
-ARG INSTALL_VERSION="dotnet-sdk-3.1 dotnet-sdk-5.0 dotnet-sdk-6.0"
+RUN wget https://github.com/cdr/code-server/releases/download/v$CODE_SERVER_VERSION/code-server_${CODE_SERVER_VERSION}_amd64.deb && \
+    dpkg -i code-server_${CODE_SERVER_VERSION}_amd64.deb && \
+    rm code-server_${CODE_SERVER_VERSION}_amd64.deb
 
 RUN apt-get install -y wget apt-transport-https software-properties-common \
     # Register the Microsoft repository
@@ -36,10 +35,10 @@ RUN apt-get install -y wget apt-transport-https software-properties-common \
     && apt-get update \
     # Install .NET SDK
     # https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
-    && apt-get install -y ${INSTALL_VERSION}
+    && apt-get install -y "dotnet-sdk-6.0"
 
-# https://github.com/Samsung/netcoredbg/releases/download/2.0.0-880/netcoredbg-linux-amd64.tar.gz
-ENV NETCOREDBG_VERSION=2.0.0-880
+# https://github.com/Samsung/netcoredbg/releases/download/2.0.0-915/netcoredbg-linux-amd64.tar.gz
+ENV NETCOREDBG_VERSION=2.0.0-915
 
 # Download and install Samsung Debugger for .NET Core runtime
 RUN wget https://github.com/Samsung/netcoredbg/releases/download/$NETCOREDBG_VERSION/netcoredbg-linux-amd64.tar.gz \
@@ -92,5 +91,3 @@ VOLUME [ "/config" ]
 WORKDIR /config/workspace
 
 ENTRYPOINT ["code-server", "--bind-addr", "0.0.0.0:8080"]
-
-EXPOSE 8080 5000 5001
