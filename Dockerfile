@@ -66,7 +66,7 @@ RUN useradd -s /bin/bash -m coder -d /config \
     && usermod -aG sudo coder \
     && echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-ENV CODE_SERVER_VERSION=4.5.1 \
+ENV CODE_SERVER_VERSION=4.5.2 \
     HOME="/config"
 
 # Download and install code-server
